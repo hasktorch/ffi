@@ -9,7 +9,13 @@
 --
 -- ADTs to manage runtime boundaries
 -------------------------------------------------------------------------------
-module Torch.Types.Numeric where
+module Torch.Types.Numeric
+  ( OpenUnit   , openUnit   , openUnitValue
+  , ClosedUnit , closedUnit , closedUnitValue
+  , Ord2Tuple  , ord2Tuple  , ord2TupleValue
+  , Positive   , positive   , positiveValue
+  , NonZero    , nonZero    , nonZeroValue
+  ) where
 
 
 -- | Datatype to represent the open unit interval: @0 < x < 1@. Any 'OpenUnit' inhabitant
@@ -53,8 +59,8 @@ newtype Ord2Tuple x = Ord2Tuple (x, x)
   deriving (Eq, Show)
 
 -- | Get the values of an ordered tuple.
-ord2TupleValues :: Ord2Tuple x -> (x, x)
-ord2TupleValues (Ord2Tuple x) = x
+ord2TupleValue :: Ord2Tuple x -> (x, x)
+ord2TupleValue (Ord2Tuple x) = x
 
 -- | smart constructor to place two values in an ordered tuple.
 ord2Tuple :: (Ord x, Num x) => (x, x) -> Maybe (Ord2Tuple x)
