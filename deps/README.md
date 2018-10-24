@@ -1,4 +1,4 @@
-# vendor
+# deps
 
 Dependencies to external repositories go in this directory.
 

@@ -44,7 +44,7 @@ data Entry = Entry {
   aten_before_arg_assign :: Maybe Text
   } deriving (Eq, Generic, Show)
 
-customOptions = defaultOptions 
+customOptions = defaultOptions
   {
     -- yaml fromat drops "aten_" prefix
     fieldLabelModifier = Prelude.drop 5
@@ -57,9 +57,9 @@ instance ToJSON Entry where
     toJSON     = genericToJSON customOptions
     toEncoding = genericToEncoding customOptions
 
--- yaml-ified ATen spec, generated from vendor/aten/src/ATen/Declarations.cwrap
--- using the script vendor/build-aten-declarations.sh
-specFile = "vendor/aten-spec/Declarations.yaml"
+-- yaml-ified ATen spec, generated from deps/aten/src/ATen/Declarations.cwrap
+-- using the script deps/build-aten-declarations.sh
+specFile = "deps/aten-spec/Declarations.yaml"
 
 -- |given an optional accessor filter entries for entries where that accessor is
 -- not nothing

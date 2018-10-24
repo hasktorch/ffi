@@ -8,7 +8,7 @@ inputs. They are not intended for general purpose use.**
 
 ## Code Generation
 
-The [`raw/`][raw] modules are generated using the scripts in
+The [`ffi/`][ffi] modules are generated using the scripts in
 [`codegen/`][codegen]. Since the outputs are already part of the repo, you
 should not need to run [`codegen/`][codegen] programs to use hasktorch.
 
@@ -20,7 +20,7 @@ operations:
 - `cabal new-run hasktorch-codegen:ht-codegen -- --lib TH --type concrete` - Builds non-generic modules.
 
 All of these programs write `.hs` files into the [`output/`][output] directory
-as a staging area (rather than overwriting [`raw/`][raw] directly).
+as a staging area (rather than overwriting [`ffi/`][ffi] directly).
 
 For details on the TH library's pseudo-templating preprocessor mechanism for
 underlying the generic modules, see [Adam Paszke's
@@ -35,5 +35,5 @@ writeup](https://apaszke.github.io/torch-internals.html).
 [examples]: ./examples/
 [output]: ./output/
 [raw]: ./raw/
-[vendor]: ./vendor/
+[deps]: ./deps/
 

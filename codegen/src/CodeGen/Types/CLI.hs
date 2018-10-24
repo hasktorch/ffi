@@ -96,7 +96,7 @@ out x = \case
 -- project.
 srcDir :: LibType -> CodeGenType -> FilePath
 srcDir lt cgt = intercalate ""
-  [ "./vendor/aten/src/"
+  [ "./deps/aten/src/"
   , show lt ++ "/"
   , if cgt == GenericFiles then "generic/" else ""
   ]
