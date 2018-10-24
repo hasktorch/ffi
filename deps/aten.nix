@@ -1,6 +1,6 @@
 # See: https://gist.github.com/CMCDragonkai/41593d6d20a5f7c01b2e67a221aa0330
 
-{ stdenv, cmake, gfortran, lib
+{ stdenv, cmake, gfortran, gmp, lib
 , typing, pyaml
 , cudaSupport ? false, cudatoolkit ? null, cudnn ? null, magma ? null
 , mklSupport ? false, blas ? null, liblapack ? null, mkl ? null
@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
     typing
     pyaml
     gfortran.cc.lib
+    gmp
     ]
     ++ lib.optionals cudaSupport [cudatoolkit magma cudnn]
     ++ (if mklSupport then [mkl] else [blas liblapack]);
