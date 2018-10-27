@@ -1,4 +1,4 @@
 [submodule "deps/aten"]
 	path = deps/aten
-	url = git@github.com:hasktorch/ATen.git
+	url = https://github.com/hasktorch/ATen.git
 	branch = hasktorch-expand
