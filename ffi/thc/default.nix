@@ -1,9 +1,9 @@
-{ mkDerivation, ATen, base, c2hs, hasktorch-raw-tests
-, hasktorch-raw-th, hasktorch-types-th, hasktorch-types-thc, hspec
+{ mkDerivation, ATen, base, c2hs, hasktorch-ffi-tests
+, hasktorch-ffi-th, hasktorch-types-th, hasktorch-types-thc, hspec
 , inline-c, QuickCheck, stdenv, text
 }:
 mkDerivation {
-  pname = "hasktorch-raw-thc";
+  pname = "hasktorch-ffi-thc";
   version = "0.0.1.0";
   src = ./.;
   libraryHaskellDepends = [
@@ -12,7 +12,7 @@ mkDerivation {
   librarySystemDepends = [ ATen ];
   libraryToolDepends = [ c2hs ];
   testHaskellDepends = [
-    base hasktorch-raw-tests hasktorch-raw-th hasktorch-types-th
+    base hasktorch-ffi-tests hasktorch-ffi-th hasktorch-types-th
     hasktorch-types-thc hspec QuickCheck text
   ];
   homepage = "https://github.com/hasktorch/hasktorch#readme";

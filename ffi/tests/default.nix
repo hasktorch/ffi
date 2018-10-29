@@ -2,7 +2,7 @@
 , text
 }:
 mkDerivation {
-  pname = "hasktorch-raw-tests";
+  pname = "hasktorch-ffi-tests";
   version = "0.0.1.0";
   src = ./.;
   libraryHaskellDepends = [

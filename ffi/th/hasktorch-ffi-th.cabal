@@ -1,4 +1,4 @@
-name:           hasktorch-raw-th
+name:           hasktorch-ffi-th
 version:        0.0.1.0
 synopsis:       Torch for tensors and neural networks in Haskell
 description:    core C bindings
@@ -161,7 +161,7 @@ library
 
 
   other-modules:
-      Paths_hasktorch_raw_th
+      Paths_hasktorch_ffi_th
 
 test-suite spec
   type: exitcode-stdio-1.0
@@ -171,9 +171,9 @@ test-suite spec
   build-depends:
       QuickCheck
     , base >=4.7 && <5
-    , hasktorch-raw-th
+    , hasktorch-ffi-th
     , hasktorch-types-th
-    , hasktorch-raw-tests
+    , hasktorch-ffi-tests
     , hspec >=2.4.4
     , text >=1.2.2.2
   other-modules:

@@ -1,9 +1,9 @@
-   let prelude = https://raw.githubusercontent.com/dhall-lang/dhall-to-cabal/master/dhall/prelude.dhall
-in let types = https://raw.githubusercontent.com/dhall-lang/dhall-to-cabal/master/dhall/types.dhall
-in let common = ../../dhall/common.dhall
+   let prelude = ../../../dhall/dhall-to-cabal/dhall/prelude.dhall
+in let types = ../../../dhall/dhall-to-cabal/dhall/types.dhall
+in let common = ../../../dhall/common.dhall
 
 in common.Package
-   // { name = "hasktorch-raw-tests"
+   // { name = "hasktorch-ffi-tests"
       , description = "core test libraries"
       , synopsis = "Testing library for raw TH and THC bindings"
       , library =
@@ -18,7 +18,7 @@ in common.Package
                     ]
                 , default-language = common.cabalvars.default-language
                 , hs-source-dirs = [ "src" ]
-                , other-modules = [ "Paths_hasktorch_raw_tests" ]
+                , other-modules = [ "Paths_hasktorch_ffi_tests" ]
                 , exposed-modules =
                     [ "Torch.FFI.Tests", "Torch.FFI.TestsNN" ]
                 }
