@@ -11,13 +11,14 @@ cabal-version: 2.2
 name: hasktorch-ffi-thc
 version: 0.0.1.0
 license: BSD-3-Clause
-author: Hasktorch dev team (Sam Stites, Austin Huang)
+maintainer: Sam Stites <fnz@fgvgrf.vb>, Austin Huang <nhfgvau@nyhz.zvg.rqh> - cipher:ROT13
+author: Hasktorch dev team
 homepage: https://github.com/hasktorch/hasktorch#readme
 bug-reports: https://github.com/hasktorch/hasktorch/issues
-synopsis: CuTorch (and THCuNN) for tensors and neural networks in Haskell
+synopsis: Bindings to Cutorch
 description:
-    Core Cuda bindings
-category: Tensors, Machine Learning
+    Cutorch (and THCUNN) FFI bindings for GPU-based tensors and neural networks in Haskell
+category: Tensors, Machine Learning, AI, FFI
 build-type: Simple
 
 source-repository head
@@ -99,6 +100,8 @@ library
         cbits/state_stuff.c
     hs-source-dirs: src nn state
     other-modules:
+        Paths_hasktorch_ffi_thc
+    autogen-modules:
         Paths_hasktorch_ffi_thc
     default-language: Haskell2010
     extra-libraries:

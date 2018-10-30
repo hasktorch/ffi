@@ -4,8 +4,9 @@ in let common = ../../../dhall/common.dhall
 
 in common.Package //
   { name = "hasktorch-types-th"
-  , description = "core C types"
-  , synopsis = "Raw C-types from torch."
+  , description = "Includes core C-types generated from c2hsc."
+  , synopsis = "C-types for Torch"
+  , category = "${common.cabalvars.category}, FFI"
   , library = Some (
     \(config : types.Config)
     -> prelude.defaults.Library //
@@ -20,6 +21,7 @@ in common.Package //
         , prelude.types.Extensions.DataKinds True
         ]
       , hs-source-dirs = [ "src" ]
+      , autogen-modules = [ "Paths_hasktorch_types_th" ]
       , other-modules = [ "Paths_hasktorch_types_th" ]
       , exposed-modules =
         [ "Torch.Types.TH.Byte"

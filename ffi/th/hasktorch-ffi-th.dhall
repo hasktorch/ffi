@@ -25,7 +25,7 @@ in let thexports-floating
   -> thexports-integral typ
   # List/map Text Text (thtype typ) [ "Lapack", "TensorLapack" ]
 
-in let lite-exports
+in let lite-exports-base
   = \(config : types.Config)
   -> List/map Text Text thffi
     [ "DiskFile"
@@ -38,23 +38,34 @@ in let lite-exports
     ]
   # thexports-floating "Double"
   # thexports-integral "Long"
-  # (if config.flag "with_nn" then [ thffi "NN.Double" ] else [] : List Text)
 
-in let full-exports
+in let full-exports-base
   = \(config : types.Config)
-  -> lite-exports config
+  -> lite-exports-base config
   # thexports-integral "Byte"
   # thexports-integral "Char"
   # thexports-integral "Int"
   # thexports-integral "Short"
   # thexports-floating "Float"
-  # (if config.flag "with_nn" then [ thffi "NN.Float" ] else [] : List Text)
+  # [thffi "NN.Float"]
+  -- See: https://github.com/haskell/hackage-server/issues/795
+  -- # (if config.flag "with_nn" then [thffi "NN.Float"]  else [] : List Text)
+
+in let all-exports
+  = \(config : types.Config)
+  -> (if config.flag "lite" then lite-exports-base config else full-exports-base config)
+  # [thffi "NN.Double"]
+  -- See: https://github.com/haskell/hackage-server/issues/795
+  -- #  (if config.flag "with_nn" then [thffi "NN.Double"] else [] : List Text)
 
 in common.Package //
   { name = "hasktorch-ffi-th"
-  , description = "Core C bindings"
-  , synopsis = "Torch for tensors and neural networks in Haskell"
-  , flags = [ common.flags.half, common.flags.lite, common.flags.with_nn ]
+  , synopsis = "Bindings to Torch"
+  , description = "Torch (and THNN) FFI bindings for CPU-based tensors and neural networks in Haskell"
+  , category = "${common.cabalvars.category}, FFI"
+  , flags = [ common.flags.half, common.flags.lite ]
+  -- See: https://github.com/haskell/hackage-server/issues/795
+  -- , flags = [ common.flags.half, common.flags.lite, common.flags.with_nn ]
   , library =
     [ \(config : types.Config)
     -> prelude.defaults.Library //
@@ -73,13 +84,15 @@ in common.Package //
         [ "cbits/finalizers.c"
         , "cbits/expand_polyfill.c"
         ]
+      , autogen-modules = [ "Paths_hasktorch_ffi_th" ]
       , other-modules = [ "Paths_hasktorch_ffi_th" ]
-      , exposed-modules
-        = if config.flag "lite" then lite-exports config else
-        ( full-exports config
-        -- This isn't an integral type, but we might need more tuning if we want to get this working
-        # (if config.flag "half" then thexports-integral "Half" else [] : List Text) )
-      , cc-options = ( if config.flag "half" then [ "-DHALF" ] else [] : List Text )
+      , cc-options = if config.flag "half" then [ "-DHALF" ] else [] : List Text
+      , exposed-modules = all-exports config
+
+        -- ( all-exports config
+        -- -- This isn't an integral type, but we might need more tuning if we want to get this working
+        -- -- # (if config.flag "half" then thexports-integral "Half" else [] : List Text) )
+        -- )
       }
     ] : Optional (types.Config → types.Library)
 
@@ -103,7 +116,10 @@ in common.Package //
           , other-modules =
             [ "MathSpec"
             , "TensorSpec"
-            ] # (if config.flag "with_nn" then [ "NNSpec" ] else [] : List Text)
+            , "NNSpec"
+            -- See: https://github.com/haskell/hackage-server/issues/795
+            -- ] # (if config.flag "with_nn" then [ "NNSpec" ] else [] : List Text)
+            ]
           }
     } ]
   }

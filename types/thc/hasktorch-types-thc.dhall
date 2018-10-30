@@ -4,8 +4,9 @@ in let common = ../../../dhall/common.dhall
 
 in common.Package //
   { name = "hasktorch-types-thc"
-  , description = "core C types"
-  , synopsis = "Raw C-types from cutorch."
+  , description = "Includes core C-types generated from c2hsc."
+  , synopsis = "C-types for Cutorch"
+  , category = "${common.cabalvars.category}, FFI"
   , library = Some (
     \(config : types.Config)
     -> prelude.defaults.Library //
@@ -21,6 +22,7 @@ in common.Package //
         ]
       , default-language = common.cabalvars.default-language
       , hs-source-dirs = [ "src" ]
+      , autogen-modules = [ "Paths_hasktorch_types_thc" ]
       , other-modules =
         [ "Paths_hasktorch_types_thc"
         , "Torch.Types.THC.Internal"

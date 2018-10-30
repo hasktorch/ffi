@@ -7,8 +7,9 @@ in let packages = common.packages
 
 in common.Package //
   { name = "hasktorch-codegen"
-  , description = "Code generation tools"
-  , synopsis = "Torch for tensors and neural networks in Haskell"
+  , description = "Codegen will generate FFI code which layes the foundation for the Hasktorch library."
+  , synopsis = "Code generation tools for Hasktorch"
+  , category = "${cabalvars.category}, FFI Tools, Code Generation"
   , library =
     [ \(config : types.Config)
     -> prelude.defaults.Library
@@ -42,6 +43,7 @@ in common.Package //
             , "CodeGen.Types.HsOutput"
             , "CodeGen.Types.Parsed"
             ]
+          , autogen-modules = [ "Paths_hasktorch_codegen" ]
           , other-modules = [ "Paths_hasktorch_codegen" ]
           }
     ] : Optional (types.Config → types.Library)

@@ -11,13 +11,14 @@ cabal-version: 2.2
 name: hasktorch-codegen
 version: 0.0.1.0
 license: BSD-3-Clause
-author: Hasktorch dev team (Sam Stites, Austin Huang)
+maintainer: Sam Stites <fnz@fgvgrf.vb>, Austin Huang <nhfgvau@nyhz.zvg.rqh> - cipher:ROT13
+author: Hasktorch dev team
 homepage: https://github.com/hasktorch/hasktorch#readme
 bug-reports: https://github.com/hasktorch/hasktorch/issues
-synopsis: Torch for tensors and neural networks in Haskell
+synopsis: Code generation tools for Hasktorch
 description:
-    Code generation tools
-category: Tensors, Machine Learning
+    Codegen will generate FFI code which layes the foundation for the Hasktorch library.
+category: Tensors, Machine Learning, AI, FFI Tools, Code Generation
 build-type: Simple
 
 source-repository head
@@ -40,6 +41,8 @@ library
         CodeGen.Types.Parsed
     hs-source-dirs: src
     other-modules:
+        Paths_hasktorch_codegen
+    autogen-modules:
         Paths_hasktorch_codegen
     default-language: Haskell2010
     default-extensions: LambdaCase OverloadedStrings

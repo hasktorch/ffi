@@ -68,8 +68,9 @@ in let full-exports
 
 in common.Package //
   { name = "hasktorch-ffi-thc"
-  , description = "Core Cuda bindings"
-  , synopsis = "CuTorch (and THCuNN) for tensors and neural networks in Haskell"
+  , description = "Cutorch (and THCUNN) FFI bindings for GPU-based tensors and neural networks in Haskell"
+  , synopsis = "Bindings to Cutorch"
+  , category = "${common.cabalvars.category}, FFI"
   , flags = [ common.flags.half, common.flags.lite, common.flags.float, common.flags.with_nn ]
   , library =
     [ \(config : types.Config)
@@ -89,6 +90,7 @@ in common.Package //
       , build-tools =
         [ { exe = "c2hs", version = prelude.anyVersion  } ]
       , default-language = common.cabalvars.default-language
+      , autogen-modules = [ "Paths_hasktorch_ffi_thc" ]
       , other-modules = [ "Paths_hasktorch_ffi_thc" ]
       , exposed-modules
         = if config.flag "lite" then lite-exports config else
