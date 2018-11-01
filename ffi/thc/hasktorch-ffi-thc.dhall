@@ -1,5 +1,6 @@
-   let prelude = ../../../dhall/dhall-to-cabal/dhall/prelude.dhall
-in let types = ../../../dhall/dhall-to-cabal/dhall/types.dhall
+   let prelude = ../../../dhall/dhall-to-cabal/dhall/prelude.dhall sha256:01509b3c6e9eaae4150a6e0ced124c2db191bf6046534a9d4973b7f05afd1d0a
+in let types = ../../../dhall/dhall-to-cabal/dhall/types.dhall sha256:cfd7597246781e8d4c6dfa5f0eabba75f14dc3f3deb7527973909b37c93f42f5
+in let fn = ../../../dhall/common/functions.dhall sha256:45e8bee44c93da6f4c47a3fdacc558b00858461325b807d4afc8bf0965716c33
 in let common = ../../../dhall/common.dhall
 in let List/map = ../../../dhall/Prelude/List/map
 in let thcffi     = \(pkg : Text) -> "Torch.FFI.THC.${pkg}"
@@ -113,7 +114,7 @@ in common.Package //
             , common.packages.QuickCheck
             , common.packages.hasktorch-ffi-tests
             , common.packages.hasktorch-ffi-th
-            , common.packages.hasktorch-ffi-thc
+            , fn.anyver "hasktorch-ffi-thc"
             , common.packages.hasktorch-types-th
             , common.packages.hasktorch-types-thc
             , common.packages.hspec

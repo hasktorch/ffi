@@ -51,5 +51,5 @@ library
     build-depends:
         base (==4.7 || >4.7) && <5,
         inline-c ==0.5 || >0.5,
-        hasktorch-types-th -any
+        hasktorch-types-th (==0.0.1 || >0.0.1) && <0.0.2
 
