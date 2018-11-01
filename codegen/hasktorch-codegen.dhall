@@ -10,6 +10,7 @@ in common.Package //
   , description = "Codegen will generate FFI code which layes the foundation for the Hasktorch library."
   , synopsis = "Code generation tools for Hasktorch"
   , category = "${cabalvars.category}, FFI Tools, Code Generation"
+  , version = common.versions.codegen
   , library =
     [ \(config : types.Config)
     -> prelude.defaults.Library

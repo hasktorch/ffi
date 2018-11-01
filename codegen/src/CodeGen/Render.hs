@@ -1,10 +1,10 @@
 {-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE CPP #-}
 module CodeGen.Render
   ( makeModule
   , writeHaskellModule
 
   , parseFile
-  , cleanList
 
   , renderFunctions
   ) where
@@ -23,6 +23,9 @@ import CodeGen.Render.Function (renderSig, SigType(..), mkHsname)
 import CodeGen.Parse.Cases (checkFunction, type2hsreal)
 import qualified CodeGen.Parse as CG (parser)
 
+#if MIN_VERSION_megaparsec(7,0,0)
+import Text.Megaparsec.Error (ParseErrorBundle)
+#endif
 
 -- ----------------------------------------
 -- helper data and functions for templating
@@ -151,19 +154,26 @@ writeHaskellModule parsedBindings makeConfig templateType
 -- Execution
 -- ----------------------------------------
 
--- | Remove if list was returned, extract non-Nothing values, o/w empty list
-cleanList :: Either (ParseError Char Void) [Maybe Function] -> [Function]
-cleanList = either (const []) catMaybes
-
 parseFile :: LibType -> CodeGenType -> String -> IO [Function]
 parseFile _ _ file = do
   putStrLn $ "\nParsing " ++ file ++ " ... "
   res <- parseFromFile CG.parser file
   pure $ cleanList res
  where
+  -- | Remove if list was returned, extract non-Nothing values, o/w empty list
+  cleanList :: Either s [Maybe Function] -> [Function]
+  cleanList = either (const []) catMaybes
+
+#if MIN_VERSION_megaparsec(7,0,0)
+  parseFromFile
+    :: Parser [Maybe Function]
+    -> String
+    -> IO (Either (ParseErrorBundle String Void) [Maybe Function])
+#else
   parseFromFile
     :: Parser [Maybe Function]
     -> String
     -> IO (Either (ParseError Char Void) [Maybe Function])
+#endif
   parseFromFile p file = runParser p file <$> readFile file
 

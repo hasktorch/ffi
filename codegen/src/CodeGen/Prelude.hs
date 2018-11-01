@@ -1,8 +1,10 @@
+{-# LANGUAGE CPP #-}
 module CodeGen.Prelude
   ( module X
   , impossible
   , tshow
   , tputStrLn
+  , anySingleBut
   ) where
 
 import Prelude         as X
@@ -28,6 +30,10 @@ import GHC.Generics    as X (Generic)
 
 import qualified Data.Text as T
 
+import Text.Megaparsec (Token, MonadParsec)
+import qualified Text.Megaparsec      as Compat.Megaparsec
+import qualified Text.Megaparsec.Char as Compat.Megaparsec
+
 impossible :: Show msg => msg -> a
 impossible x = error (show x)
 
@@ -36,3 +42,11 @@ tshow = T.pack . show
 
 tputStrLn :: Text -> IO ()
 tputStrLn = putStrLn . T.unpack
+
+#if MIN_VERSION_megaparsec(7,0,0)
+anySingleBut ::  MonadParsec e s m => Token s -> m (Token s)
+anySingleBut = Compat.Megaparsec.anySingleBut
+#else
+anySingleBut ::  MonadParsec e s m => Token s -> m (Token s)
+anySingleBut = Compat.Megaparsec.notChar
+#endif

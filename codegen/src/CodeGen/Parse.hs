@@ -119,12 +119,12 @@ functionArg = do
   endsInComma :: Parser ()
   endsInComma
     =   try (void (char ',' >> space >> eol))
-    <|> try (void (char ',' >> space >> string "//" >> some (notChar '\n') >> eol))
+    <|> try (void (char ',' >> space >> string "//" >> some (anySingleBut '\n') >> eol))
     <|> void (char ',')
 
   endsInParen :: Parser ()
   endsInParen
-    =   try (space >> string "//" >> some (notChar '\n') >> eol >> space >> lookAhead (void $ char ')'))
+    =   try (space >> string "//" >> some (anySingleBut '\n') >> eol >> space >> lookAhead (void $ char ')'))
     <|> lookAhead (void $ char ')')
 
 functionArgs :: Parser [Arg]
@@ -168,7 +168,7 @@ inlineComment = do
   space
   string "//"
   some (alphaNumChar <|> char '_' <|> char ' ')
-  void $ eol <|> (some (notChar '\n') >> eol)
+  void $ eol <|> (some (anySingleBut '\n') >> eol)
 
 -- | skip over a _single-line_ of block comment -- something which seems standard in the libTH.
 comment :: Parser ()
@@ -191,7 +191,7 @@ constant = do
 skip :: Parser (Maybe Function)
 skip = do
   (not <$> atEnd) >>= guard
-  void $ many (notChar '\n') <* (void eol <|> eof)
+  void $ many (anySingleBut '\n') <* (void eol <|> eof)
   pure Nothing
 
 
