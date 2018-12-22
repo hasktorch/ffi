@@ -26,6 +26,9 @@ stdenv.mkDerivation rec {
     ++ (if mklSupport then [mkl] else [blas liblapack]);
   cmakeFlags = [
     ("-DNO_CUDA=" + (if cudaSupport then "false" else "true"))
-    (if dev then "-Wno-dev" else "")
+    (if dev then "" else "-Wno-dev")
   ];
+  postInstall = ''
+    ls -lisah $out
+  '';
 }
