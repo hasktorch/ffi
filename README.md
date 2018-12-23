@@ -1,6 +1,8 @@
 # The Hasktorch FFI
 
-In reality, this repo is ready to be released. The Hasktorch FFI just needs some altered namespacing.
+Hasktorch FFI repo. Includes code generation tools, external dependencies, and low-level raw FFI bandings.
+
+This repo is loaded as a submodule by the [main repo](https://github.com/hasktorch/hasktorch). If you are new to Hasktorch, start there.
 
 | Directory                   | Description |
 | --------------------------- | ----------- |
