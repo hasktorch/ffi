@@ -12,11 +12,24 @@ function check_bin {
 case "$(uname)" in
   "Darwin")
     echo "Running as OSX"
-    check_bin "gcc-7"
-    CXX=g++-7
-    CC=gcc-7
+    if ! [ -x "$(command -v gcc-7)" ] && ! [ -x "$(command -v gcc-8)" ] && ! [ -x "$(command -v gcc-9)" ] ; then
+      echo "Error: gcc-7+ is not installed." >&2
+      exit 1
+    fi
+    if [ -x "$(command -v gcc-7)" ] ; then
+      echo "  Using gcc-7"
+      CXX=g++-7
+      CC=gcc-7
+    elif [ -x "$(command -v gcc-8)" ] ; then
+      echo "  Using gcc-8"
+      CXX=g++-8
+      CC=gcc-8
+    else
+      echo "  Using gcc-9"
+      CXX=g++-9
+      CC=gcc-9
+    fi
     ;;
-
   "Linux")
     if uname -v | grep "Ubuntu" &> /dev/null && lsb_release -a 2>&1 | grep " 17." &> /dev/null; then
       echo "Running with gcc-4.8 on Ubuntu 17.xx -- see https://github.com/pytorch/pytorch/issues/5136 for details"
