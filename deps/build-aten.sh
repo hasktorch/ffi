@@ -71,7 +71,7 @@ function build {
   echo "exclude cuda? $sans_cuda"
   sleep 1
   cmake .. -DNO_CUDA=$sans_cuda -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_CC_COMPILER=$CC -DCXX=$CXX -DCC=$CC -Wno-dev -DCMAKE_INSTALL_PREFIX=.
-  make install
+  make install -j$(nproc)
 }
 
 function install {
