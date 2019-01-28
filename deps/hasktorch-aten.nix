@@ -2,12 +2,12 @@
 
 { stdenv, cmake, gfortran, gmp, lib
 , typing, pyaml
-, cudaSupport ? false, cudatoolkit_10_0 ? null, cudnn_cudatoolkit_10_0 ? null, magma_cudatoolkit_10_0 ? null
+, cudaSupport ? false, cudatoolkit_9_0 ? null, cudnn_cudatoolkit_9_0 ? null, magma_cudatoolkit_9_0 ? null
 , mklSupport ? false, blas ? null, liblapack ? null, mkl ? null
 , dev ? false
 }:
 
-assert cudaSupport -> cudatoolkit_10_0 != null && cudnn_cudatoolkit_10_0 != null;
+assert cudaSupport -> cudatoolkit_9_0 != null && cudnn_cudatoolkit_9_0 != null;
 assert  mklSupport -> mkl != null;
 assert !mklSupport -> blas != null && liblapack != null;
 
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     gfortran.cc.lib
     gmp
     ]
-    ++ lib.optionals cudaSupport [cudatoolkit_10_0 magma_cudatoolkit_10_0 cudnn_cudatoolkit_10_0]
+    ++ lib.optionals cudaSupport [cudatoolkit_9_0 magma_cudatoolkit_9_0 cudnn_cudatoolkit_9_0]
     ++ (if mklSupport then [mkl] else [blas liblapack]);
   cmakeFlags = [
     ("-DNO_CUDA=" + (if cudaSupport then "false" else "true"))
